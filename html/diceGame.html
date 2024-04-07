@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game</title>
+    <style>
+        body {
+            background-color: gray;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h2, h3 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        button {
+            display: block;
+            width: 150px;
+            height: 40px;
+            margin: 2% auto;
+            border-radius: 20px;
+            font-size: 20px;
+            background-color: white;
+            color: black;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .player {
+            margin: 0 10px;
+        }
+        
+        .winner {
+            font-family: cursive;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dice Game</h1>
+
+    <div class="container">
+        <div class="player">
+            <h2>Player 1</h2>
+            <img id="randomImage1" src="" alt="Random Image">
+        </div>
+        <div class="player">
+            <h2>Player 2</h2>
+            <img id="randomImage2" src="" alt="Random Image">
+        </div>
+    </div>
+
+    <button onclick="rollDice()">Roll</button>
+    <button onclick="resetGame()">Reset</button>
+
+    <div class="container">
+        <div class="player">
+            <h3>Player 1 Score: <span id="Score1">0</span></h3>
+        </div>
+        <div class="player">
+            <h3>Player 2 Score: <span id="Score2">0</span></h3>
+        </div>
+    </div>
+
+    <h3>Maximum Score: <i>20</i></h3>
+    <h1 id="Winner" class="winner"></h1>
+
+    <script>
+        var imagesArray = [
+            '../img/dice1.png',
+            '../img/dice2.png',
+            '../img/dice3.png',
+            '../img/dice4.png',
+            '../img/dice5.png',
+            '../img/dice6.png'
+        ];
+
+        let player1Score = 0;
+        let player2Score = 0;
+
+        function rollDice() {
+            var num1 = Math.floor(Math.random() * imagesArray.length); 
+            var img1 = imagesArray[num1];
+            document.getElementById('randomImage1').src = img1;
+            player1Score = player1Score + (num1 + 1);
+            document.getElementById("Score1").innerHTML = player1Score;
+
+            var num2 = Math.floor(Math.random() * imagesArray.length); 
+            var img2 = imagesArray[num2];
+            document.getElementById('randomImage2').src = img2;
+            player2Score = player2Score + (num2 + 1);
+            document.getElementById("Score2").innerHTML = player2Score;
+
+            var winnerElement = document.getElementById("Winner");
+
+            if (player1Score >= 30 && player2Score >= 30) {
+                winnerElement.innerHTML = "Both Players win!";
+                resetScores();
+            } else if (player1Score >= 30) {
+                winnerElement.innerHTML = "Winner: Player 1";
+                resetScores();
+            } else if (player2Score >= 30) {
+                winnerElement.innerHTML = "Winner: Player 2";
+                resetScores();
+            } else {
+                winnerElement.innerHTML = ""; 
+            }
+        }
+
+        function resetScores() {
+            player1Score = 0;
+            player2Score = 0;
+            document.getElementById("Score1").innerHTML = player1Score;
+            document.getElementById("Score2").innerHTML = player2Score;
+        }
+
+        function resetGame() {
+            resetScores();
+            document.getElementById("Winner").innerHTML = "";
+        }
+
+        window.onload = function () {
+            rollDice();
+        }
+    </script>
+</body>
+</html>
